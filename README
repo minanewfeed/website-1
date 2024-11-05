@@ -1,1 +1,55 @@
-TEST 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/7854023a-c4b6-4055-9fb0-557275b32f3f/deploy-status)](https://app.netlify.com/sites/feeliks-dynamics/deploys)
+# Feeliks Dynamics Website
+
+This repository contains the source code for the Feeliks Dynamics company website.
+
+## Overview
+
+The Feeliks Dynamics website is built to showcase our company's products, services, and expertise in the field of dynamics and control systems. The site is deployed and hosted on Netlify.
+
+## Development
+
+### Prerequisites
+- [Jekyll](https://jekyllrb.com/docs/installation/)
+- [DecapCMS](https://decapcms.org/docs/jekyll/)
+
+### Setup
+1. Clone the repository
+2. Install Jekyll and Bundler:
+   ```bash
+   gem install jekyll bundler
+   ```
+3. Navigate to the project directory:
+   ```bash
+   cd feeliks-dynamics-website
+   ```
+4. Install dependencies:
+   ```bash
+   bundle install
+   ```
+5. Start the development server:
+   ```bash
+   bundle exec jekyll serve
+   ```
+6. Open your browser and visit `http://localhost:4000` to view the site locally
+
+### Setting up DecapCMS
+1. Navigate to `/admin` directory:
+   ```bash
+   cd admin
+   ```
+2. Create a `config.yml` file:
+   ```bash
+   touch config.yml
+   ```
+3. Configure DecapCMS in `config.yml` with your repository settings and content collections
+4. Add the following to your site's `<head>` section:
+   ```html
+   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+   ```
+5. Enable Identity service in your Netlify dashboard
+6. Configure external providers or email/password authentication
+7. Set up Git Gateway in your Netlify dashboard
+8. Access the CMS at `yourdomain.com/admin`
+
+Note: Make sure your repository has the necessary permissions set up in Netlify to allow DecapCMS to make changes.

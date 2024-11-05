@@ -17,3 +17,8 @@
 - [ ] Google Analytics
 - [ ] Google Web Console
 - [ ] Open Gra- ph
+- [ ]Podcdast
+- [ ]About
+- [ ]Newsletter sign up
+- [ ]Speaking page
+- [ ]Leadership Training or Workshops section

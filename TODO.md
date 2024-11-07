@@ -1,6 +1,7 @@
 # TODOS
 
 ## Immediate
+- [ ] Add service section
 - [ ] Add Calendly page
 - [ ] Add call to action
 - [ ] Fix testimony
@@ -17,8 +18,8 @@
 - [ ] Google Analytics
 - [ ] Google Web Console
 - [ ] Open Gra- ph
-- [ ]Podcdast
-- [ ]About
-- [ ]Newsletter sign up
-- [ ]Speaking page
-- [ ]Leadership Training or Workshops section
+- [ ] Podcdast
+- [ ] About
+- [ ] Newsletter sign up
+- [ ] Speaking page
+- [ ] Leadership Training or Workshops section

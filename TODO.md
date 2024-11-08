@@ -1,16 +1,16 @@
 # TODOS
 
 ## Immediate
-- [ ] Add service section
-- [ ] Add Calendly page
-- [ ] Add call to action
-- [ ] Fix testimony
-- [ ] Add logos to social proof
+- [X] Add service section
+- [X] Add Calendly page
+- [X] Add call to action
+- [X] Fix testimony
+- [X] Fill description meta tag 
+- [X] Add logos to social proof
 - [ ] Setup info@feeliksdynamics.com
 - [ ] Add Contact page
 - [ ] Add Terms and Condition page
 - [ ] Add Privacy page
-- [ ] Fill description meta tag 
 
 ## Later
 - [ ] Jekyllify everything

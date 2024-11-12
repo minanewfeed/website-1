@@ -7,7 +7,7 @@
 - [X] Fix testimony
 - [X] Fill description meta tag 
 - [X] Add logos to social proof
-- [ ] Setup info@feeliksdynamics.com
+- [X] Setup info@feeliksdynamics.com
 - [ ] Add Contact page
 - [ ] Add Terms and Condition page
 - [ ] Add Privacy page

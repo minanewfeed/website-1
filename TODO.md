@@ -8,18 +8,18 @@
 - [X] Fill description meta tag 
 - [X] Add logos to social proof
 - [X] Setup info@feeliksdynamics.com
-- [ ] Add Contact page
-- [ ] Add Terms and Condition page
-- [ ] Add Privacy page
 
 ## Later
 - [ ] Jekyllify everything
+- [ ] Add Contact page
+- [ ] Add Terms and Condition page
+- [ ] Add Privacy page
 - [ ] Add HubSpot
 - [ ] Google Analytics
 - [ ] Google Web Console
-- [ ] Open Gra- ph
-- [ ] Podcdast
-- [ ] About
-- [ ] Newsletter sign up
+- [ ] Open Graph
+- [ ] Podcdast page
+- [ ] About page
+- [ ] Newsletter sign up component
 - [ ] Speaking page
 - [ ] Leadership Training or Workshops section

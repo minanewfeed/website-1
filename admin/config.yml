@@ -1,0 +1,38 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/img/uploads"
+public_folder: "/assets/img/uploads"
+
+collections:
+  - name: "pages"
+    label: "Pages"
+    files:
+      - name: "home"
+        label: "Home Page"
+        file: "index.md"
+        fields:
+          - {label: "Layout", name: "layout", widget: "hidden", default: "home"}
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Hero Title", name: "hero_title", widget: "string"}
+          - {label: "Hero Description", name: "hero_description", widget: "text"}
+          
+  - name: "testimonials"
+    label: "Testimonials"
+    folder: "_testimonials"
+    create: true
+    fields:
+      - {label: "Name", name: "name", widget: "string"}
+      - {label: "Position", name: "position", widget: "string"}
+      - {label: "Company", name: "company", widget: "string"}
+      - {label: "Quote", name: "quote", widget: "text"}
+
+  - name: "services"
+    label: "Services"
+    folder: "_services"
+    create: true
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Icon", name: "icon", widget: "image"}

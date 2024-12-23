@@ -1,0 +1,33 @@
+# Welcome to Jekyll!cccccbbthfurrcrrvrngdfengcgerkcutbfbjltdrckk
+
+
+title: Feeliks Dynamics
+email: info@feeliksdynamics.com
+description: >-
+  Feeliks Dynamics is a leadership development firm specializing in strategy, 
+  coaching and talent development to help businesses to engage, retain and 
+  grow future-ready leaders
+baseurl: ""
+url: "https://www.feeliksdynamics.com"
+
+# Build settings
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Collections
+collections:
+  services:
+    output: true
+  testimonials:
+    output: false
+
+include:
+  - _pages
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .git/

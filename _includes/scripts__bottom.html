@@ -1,0 +1,210 @@
+{% raw %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!--<script src="https://kit.fontawesome.com/7c40ff0c50.js" crossorigin="anonymous"></script>-->
+<script>
+    /**
+    * Element.closest() polyfill
+    * https://developer.mozilla.org/en-US/docs/Web/API/Element/closest#Polyfill
+    */
+    if (!Element.prototype.closest) {
+        if (!Element.prototype.matches) {
+            Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+        }
+        Element.prototype.closest = function (s) {
+            var el = this;
+            var ancestor = this;
+            if (!document.documentElement.contains(el)) return null;
+            do {
+                if (ancestor.matches(s)) return ancestor;
+                ancestor = ancestor.parentElement;
+            } while (ancestor !== null);
+            return null;
+        };
+    }
+    /*
+    Vanilla Debounce -- Debounce for all the things!!!!
+    http://davidwalsh.name/function-debounce
+    1. params: function to be called, wait time, or if needed immediately
+    2. Use this you monsters!
+    i.e. window.addEventListener('scroll', debounce(func, wait));
+    */
+    function debounce(func, wait, immediate) {
+        var timeout;
+        return function () {
+            var context = this, args = arguments;
+            var later = function () {
+                timeout = null;
+                if (!immediate) func.apply(context, args);
+            };
+            var callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) func.apply(context, args);
+        };
+    };
+
+    // IE/Edge fallback for responsive images while 'object-fit' property is not supported
+    function ObjectFitIt() {
+        $('img.card__bg-img').each(function () {
+            var imgSrc = $(this).attr('src');
+            var fitType = 'cover';
+
+            if ($(this).data('fit-type')) {
+                fitType = $(this).data('fit-type');
+            }
+
+            $(this).parent().css({ 'background': 'transparent url("' + imgSrc + '") no-repeat center center/' + fitType, 'width': '100%', 'min-width': '100%' });
+            $('img.card__bg-img').css('display', 'none');
+        });
+
+        $('img.banner__bg-img').each(function () {
+            var imgSrc = $(this).attr('src');
+            var fitType = 'cover';
+
+            if ($(this).data('fit-type')) {
+                fitType = $(this).data('fit-type');
+            }
+
+            $(this).parent().css({ 'background': 'transparent url("' + imgSrc + '") no-repeat center center/' + fitType, 'width': '100%', 'min-width': '100%', 'opacity': '0.3' });
+            $('img.banner__bg-img').css('display', 'none');
+        });
+    }
+
+    if ('objectFit' in document.documentElement.style === false) {
+        ObjectFitIt();
+    }
+
+    $(document).ready(function () {
+        var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+        var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+
+        // hides all elements on load
+        const animatedItems = document.querySelectorAll('.animated');
+        for (i = 0; i < animatedItems.length; i++) {
+            animatedItems[i].style.opacity = 0;
+        }
+
+        /*
+        Vanilla -- Primary Navigation Scroll Switcher function
+            1. Add the "js-scrolled" class to the header when you reach its scroll position.
+            2. Remove "js-scrolled" when you leave the scroll position
+        */
+        // Get the header
+        const header = document.getElementById("js-primaryNav");
+
+        // Get the offset position of the navbar
+        const scrolledNavOffset = header.offsetTop;
+
+        function scrolledNav() {
+            if (window.pageYOffset > scrolledNavOffset) {
+                header.classList.add("js-scrolled");
+            } else {
+                header.classList.remove("js-scrolled");
+            }
+        }
+
+        // When the user scrolls the page, execute myFunction
+        window.addEventListener('scroll', debounce(scrolledNav, "immediate"));
+
+        /*
+        Vanilla -- Scroll Based Animations Trigger
+        http://fofwebdesign.co.uk/template/_testing/scroll-in-view/add-class-to-target-when-trigger-in-view-reduced.htm
+        -----------------------------------------------------
+            1. params:  trigger element, target element class, classes to add to target element, trigger element distance from top, unit ('percent' or 'pixels')
+            2. usage:   elementFromTop(elemTrigger, elemTarget, classToAdd, distanceFromTop, unit);
+        */
+        function hasClass(el, cls) {
+            if (el.className.match('(?:^|\\s)' + cls + '(?!\\S)')) { return true; }
+        }
+        function addClass(el, cls) {
+            if (!el.className.match('(?:^|\\s)' + cls + '(?!\\S)')) { el.className += ' ' + cls; }
+        }
+        function delClass(el, cls) {
+            //el.className = el.className.replace(new RegExp('(?:^|\\s)'+cls+'(?!\\S)'),'');
+        }
+
+        function elementFromTop(elemTrigger, elemTarget, classToAdd, distanceFromTop, unit) {
+
+            var winY = window.innerHeight || document.documentElement.clientHeight,
+                elTriggerLength = elemTrigger.length,
+                elTargetLength, distTop, distPercent, distPixels, distUnit, elTarget, i, j;
+
+            for (i = 0; i < elTriggerLength; ++i) {
+                elTarget = document.querySelectorAll('.' + elemTarget);
+                elTargetLength = elTarget.length;
+                distTop = elemTrigger[i].getBoundingClientRect().top;
+                distPercent = Math.round((distTop / winY) * 100);
+                distPixels = Math.round(distTop);
+                distUnit = unit == 'percent' ? distPercent : distPixels;
+                if (distUnit <= distanceFromTop) {
+                    if (!hasClass(elemTrigger[i], elemTarget)) {
+                        for (j = 0; j < elTargetLength; ++j) {
+                            if (!hasClass(elTarget[j], classToAdd)) { addClass(elTarget[j], classToAdd); }
+                        }
+                    } else {
+                        if (!hasClass(elemTrigger[i], classToAdd)) { addClass(elemTrigger[i], classToAdd); }
+                    }
+                } else {
+                    //delClass(elemTrigger[i], classToAdd);
+                    if (!hasClass(elemTrigger[i], elemTarget)) {
+                        //for (j = 0; j < elTargetLength; ++j) { delClass(elTarget[j], classToAdd); }
+                    }
+                }
+            }
+        }
+
+        // Invokes with Debounce
+        window.addEventListener('scroll', debounce(
+            function () {
+                //elementFromTop( document.querySelectorAll('.js-fadeInBasic'), 'animated', 'fadeIn', 80, 'percent');
+                elementFromTop(document.querySelectorAll('.js-fadeInUp'), 'animated', 'fadeInUp', 80, 'percent');
+                elementFromTop(document.querySelectorAll('.js-fadeInUpBig'), 'animated', 'fadeInUpBig', 80, 'percent');
+                elementFromTop(document.querySelectorAll('.js-fadeInDown'), 'animated', 'fadeInDown', 80, 'percent');
+                elementFromTop(document.querySelectorAll('.js-fadeInDownBig'), 'animated', 'fadeInDownBig', 80, 'percent');
+                elementFromTop(document.querySelectorAll('.js-fadeInLeft'), 'animated', 'fadeInLeft', 80, 'percent');
+                elementFromTop(document.querySelectorAll('.js-fadeInLeftBig'), 'animated', 'fadeInLeftBig', 80, 'percent');
+                elementFromTop(document.querySelectorAll('.js-fadeInRight'), 'animated', 'fadeInRight', 80, 'percent');
+                elementFromTop(document.querySelectorAll('.js-fadeInRightBig'), 'animated', 'fadeInRightBig', 80, 'percent');
+                elementFromTop(document.querySelectorAll('.js-slideInBasic'), 'animated', 'slideIn', 80, 'percent');
+                elementFromTop(document.querySelectorAll('.js-slideInUp'), 'animated', 'slideInUp', 80, 'percent');
+                elementFromTop(document.querySelectorAll('.js-slideInDown'), 'animated', 'slideInDown', 80, 'percent');
+                elementFromTop(document.querySelectorAll('.js-slideInLeft'), 'animated', 'slideInLeft', 80, 'percent');
+                elementFromTop(document.querySelectorAll('.js-slideInRight'), 'animated', 'slideInRight', 80, 'percent');
+            }, false), 100);
+
+    });
+</script>
+<script src="/assets/js/main.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.0.0/jquery.magnific-popup.min.js"></script>
+<script src="/assets/js/scrollreveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.7.2/jquery.matchHeight-min.js"></script>
+<script src="/assets/js/module_88611538580_two-column--variable.min.js"></script>
+<script>
+    $(function () {
+        $('.col-md-4:has(.col-border)').matchHeight();
+    });
+    $(function () {
+        $('section#module_17025718352605 .custom-slick').slick({
+            infinite: true,
+            autoplay: false,
+            autoplaySpeed: 5000,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            dots: true,
+            arrows: true,
+            prevArrow: '<button type="button" class="cs-prev slick-prev"><svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M6.87412 1.13558C6.91402 1.17845 6.94568 1.22937 6.96728 1.28544C6.98888 1.3415 7 1.40161 7 1.46231C7 1.52301 6.98888 1.58312 6.96728 1.63918C6.94568 1.69525 6.91402 1.74617 6.87412 1.78904L2.03507 7.00012L6.87412 12.2112C6.91396 12.2541 6.94556 12.305 6.96712 12.3611C6.98868 12.4172 6.99978 12.4773 6.99978 12.5379C6.99978 12.5986 6.98868 12.6587 6.96712 12.7148C6.94556 12.7708 6.91396 12.8218 6.87412 12.8647C6.83429 12.9076 6.78699 12.9416 6.73494 12.9648C6.6829 12.988 6.62711 13 6.57077 13C6.51443 13 6.45865 12.988 6.4066 12.9648C6.35455 12.9416 6.30726 12.9076 6.26742 12.8647L1.12588 7.32685C1.08598 7.28398 1.05432 7.23306 1.03272 7.17699C1.01112 7.12093 1 7.06082 1 7.00012C1 6.93942 1.01112 6.87932 1.03272 6.82325C1.05432 6.76718 1.08598 6.71626 1.12588 6.67339L6.26742 1.13558C6.30722 1.0926 6.3545 1.0585 6.40656 1.03524C6.45861 1.01198 6.51441 1 6.57077 1C6.62713 1 6.68293 1.01198 6.73499 1.03524C6.78704 1.0585 6.83432 1.0926 6.87412 1.13558Z" fill="#F1F4FA" stroke="#fffff"/></svg></button>',
+            nextArrow: '<button type="button" class="cs-next slick-next"><svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.12588 1.13558C1.08598 1.17845 1.05432 1.22937 1.03272 1.28544C1.01112 1.3415 1 1.40161 1 1.46231C1 1.52301 1.01112 1.58312 1.03272 1.63918C1.05432 1.69525 1.08598 1.74617 1.12588 1.78904L5.96493 7.00012L1.12588 12.2112C1.08604 12.2541 1.05444 12.305 1.03288 12.3611C1.01132 12.4172 1.00022 12.4773 1.00022 12.5379C1.00022 12.5986 1.01132 12.6587 1.03288 12.7148C1.05444 12.7708 1.08604 12.8218 1.12588 12.8647C1.16571 12.9076 1.21301 12.9416 1.26506 12.9648C1.3171 12.988 1.37289 13 1.42923 13C1.48557 13 1.54135 12.988 1.5934 12.9648C1.64545 12.9416 1.69274 12.9076 1.73258 12.8647L6.87412 7.32685C6.91402 7.28398 6.94568 7.23306 6.96728 7.17699C6.98888 7.12093 7 7.06082 7 7.00012C7 6.93942 6.98888 6.87932 6.96728 6.82325C6.94568 6.76718 6.91402 6.71626 6.87412 6.67339L1.73258 1.13558C1.69278 1.0926 1.6455 1.0585 1.59344 1.03524C1.54139 1.01198 1.48559 1 1.42923 1C1.37287 1 1.31707 1.01198 1.26501 1.03524C1.21296 1.0585 1.16568 1.0926 1.12588 1.13558Z" fill="#F1F4FA" stroke="#fffff"/></svg></button>',
+            responsive: [
+                {
+                    breakpoint: 767,
+                    settings: {
+                        dots: false
+                    }
+                }
+            ]
+        });
+    });
+</script>
+<script defer src="/assets/js/index.js"></script>
+{% endraw %}

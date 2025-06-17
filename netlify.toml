@@ -1,0 +1,23 @@
+[build]
+  publish = "."
+  functions = "functions"
+
+# Redirect and rewrite rules
+[[redirects]]
+  from = "/waitlist/success"
+  to = "/prevena.html?success=true"
+  status = 302
+
+# Headers to improve security
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    
+# Environment variable configuration
+[template.environment]
+  EMAIL_OCTOPUS_API_KEY = "Your EmailOctopus API key"
+  EMAIL_OCTOPUS_LIST_ID = "Your EmailOctopus List ID"
